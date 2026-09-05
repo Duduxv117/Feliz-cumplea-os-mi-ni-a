@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Bibi! 🌸⛏️</title>
+    
+    <!-- Fuente Pixelada Minecraft -->
+<link rel="stylesheet" href="styles.css">
+</head>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', monospace, sans-serif !important;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* FONDO DETALLADO EN CSS: ATARDECER, MONTAÑAS, ÁRBOLES CEREZO Y PASTO */
+        body {
+            background-color: #ff9a8b;
+            background-image: 
+                /* Capa 1: Bloque de Pasto Detallado con Textura */
+                linear-gradient(to top, #385e19 0px, #385e19 25px, #5c8e32 25px, #5c8e32 35px, #795538 35px, #795538 75px, transparent 75px),
+                repeating-linear-gradient(90deg, transparent 0px, transparent 10px, rgba(0,0,0,0.15) 10px, rgba(0,0,0,0.15) 20px),
+                /* Capa 2: Árboles de Cerezo Próximos (Pixel Copas) */
+                radial-gradient(circle at 15% 75%, #ffb7c5 0px, #ffb7c5 45px, rgba(230, 110, 150, 0.8) 46px, transparent 70px),
+                radial-gradient(circle at 85% 70%, #f7a8b8 0px, #f7a8b8 55px, rgba(210, 90, 130, 0.8) 56px, transparent 80px),
+                /* Capa 3: Montañas Distantes con Cerezo */
+                polygon(0% 100%, 20% 55%, 40% 100%),
+                radial-gradient(ellipse at 30% 65%, #d87093 0%, #b0486d 50%, transparent 70%),
+                radial-gradient(ellipse at 70% 60%, #e0829d 0%, #a3385c 50%, transparent 70%),
+                /* Capa 4: Gradiente de Atardecer */
+                linear-gradient(to bottom, #ff5e62 0%, #ff9966 35%, #ffb199 65%, #f7a8b8 100%);
+            background-attachment: fixed;
+            color: #ffffff !important;
+        }
+
+        /* PANTALLAS */
+        .screen {
+            display: none !important;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .screen.active-screen {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CAJAS ESTILO INTERFAZ MINECRAFT */
+        .pixel-box {
+            background-color: rgba(33, 20, 28, 0.94) !important;
+            border: 4px solid #000000;
+            outline: 4px solid #d47a96;
+            box-shadow: inset -4px -4px 0px #11080d, inset 4px 4px 0px #f3a4be, 0 8px 20px rgba(0,0,0,0.6);
+            padding: 20px;
+            margin-bottom: 15px;
+            width: 100%;
+            border-radius: 2px;
+        }
+
+        .pixel-subcard {
+            background-color: rgba(24, 12, 19, 0.92) !important;
+            border: 3px solid #000000;
+            box-shadow: inset -3px -3px 0px #0d0408, inset 3px 3px 0px #633246;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        /* TEXTOS */
+        .mc-text, p, span, li {
+            font-size: 0.65rem;
+            line-height: 1.6;
+            color: #fce4ec;
+        }
+
+        .mc-badge {
+            color: #ffb74d;
+            font-size: 0.6rem;
+            margin-bottom: 15px;
+        }
+
+        .welcome-title, .mc-title {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: #ffeb3b;
+            line-height: 1.5;
+            text-shadow: 2px 2px 0px #5d4037;
+        }
+
+        .welcome-sub, .header-subtitle {
+            color: #f8bbd0;
+            font-size: 0.65rem;
+            margin-bottom: 25px;
+        }
+
+        /* BOTONES */
+        .mc-btn {
+            background: #880e4f;
+            color: #ffffff;
+            border: 3px solid #000000;
+            box-shadow: inset -3px -3px 0px #4a0000, inset 3px 3px 0px #bc477b;
+            padding: 12px 16px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .mc-btn:hover {
+            background: #ff4081;
+            color: #ffffff;
+            box-shadow: inset -3px -3px 0px #c2185b, inset 3px 3px 0px #ff80ab;
+        }
+
+        /* SPINNER DE CARGA */
+        .pixel-spinner {
+            width: 32px;
+            height: 32px;
+            background-color: #ff80ab;
+            border: 3px solid #000000;
+            margin: 0 auto 20px auto;
+            animation: mc-spin 0.8s infinite steps(4);
+        }
+
+        @keyframes mc-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #ff80ab;
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+        }
+
+        .sub-loading {
+            color: #f8bbd0;
+            font-size: 0.55rem;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        #main-content {
+            justify-content: flex-start;
+            padding: 20px 10px;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* TAB BAR NAVEGACIÓN */
+        .tab-bar {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: #4a2838;
+            border: 2px solid #000000;
+            box-shadow: inset -2px -2px 0px #221018, inset 2px 2px 0px #7a465f;
+            color: #ffffff;
+            padding: 8px 10px;
+            font-size: 0.55rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: #ff4081;
+            color: #ffffff;
+            box-shadow: inset -2px -2px 0px #c2185b, inset 2px 2px 0px #ff80ab;
+        }
+
+        .content-area { width: 100%; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card-title {
+            color: #ffeb3b;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .auto-subtitle, .sub-card h3 {
+            color: #ff80ab;
+            font-size: 0.65rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .hero-image-box { margin: 15px 0; }
+
+        .card-img, .gallery-img, .cover-img {
+            border: 3px solid #000000;
+            outline: 2px solid #ff80ab;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        /* GRIDS DE CONTENIDO */
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .photo-grid-20 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .photo-card-item, .media-card {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .photo-desc {
+            font-size: 0.55rem;
+            color: #f8bbd0;
+            margin-top: 6px;
+        }
+
+        .gallery-img, .cover-img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+        }
+
+        .playlist-banner {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .playlist-banner h3 {
+            color: #ff80ab;
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+        }
+
+        .sign { margin-top: 20px; color: #ff80ab; font-size: 0.65rem; }
+
+        /* QUIZ */
+        .quiz-q { margin-bottom: 12px; }
+        .quiz-opt { width: 100%; margin-top: 8px; text-align: left; }
+        .quiz-opt.correct {
+            background: #2e7d32 !important;
+            color: #ffffff !important;
+            box-shadow: inset -3px -3px 0px #1b5e20, inset 3px 3px 0px #4caf50 !important;
+        }
+        .quiz-opt.incorrect {
+            background: #c62828 !important;
+            color: #ffffff !important;
+            box-shadow: inset -3px -3px 0px #b71c1c, inset 3px 3px 0px #ef5350 !important;
+        }
+        .quiz-result-box { margin-top: 20px; text-align: center; }
+        .quiz-result-box h3 { color: #ffeb3b; font-size: 0.75rem; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA 1: BIENVENIDA -->
+    <div id="welcome-screen" class="screen active-screen">
+        <div class="welcome-card pixel-box" style="max-width: 420px; text-align: center;">
+            <div class="mc-badge">🌸 EDICIÓN ESPECIAL < 3 🌸</div>
+            <h1 class="welcome-title">¿PREPARADA PARA TU SORPRESA?</h1>
+            <p class="welcome-sub">Diseñado especialmente ti Bibi ✨</p>
+            <button class="mc-btn" onclick="iniciarExperiencia()">¡ENTRAL AL MUNDO! 💖</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: CARGA -->
+    <div id="loading-screen" class="screen">
+        <div class="loader-content pixel-box" style="max-width: 350px; text-align: center;">
+            <div class="pixel-spinner"></div>
+            <p class="loading-text">Generando Terreno...</p>
+            <p class="sub-loading">Cargando Datos...</p>
+        </div>
+    </div>
+
+    <!-- PANTALLA 3: CONTENIDO PRINCIPAL -->
+    <div id="main-content" class="screen">
+        <header class="app-header">
+            <h1 class="mc-title">HAPPY BIRTHDAY :D</h1>
+            <p class="header-subtitle">Crafting Memories 🌸⛏️</p>
+        </header>
+
+        <!-- NAVEGACIÓN (SIN MEMES) -->
+        <nav class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab(this, 'inicio')">🏠 Inicio</button>
+            <button class="tab-btn" onclick="switchTab(this, 'nosotros')">👥💕 Nosotros</button>
+            <button class="tab-btn" onclick="switchTab(this, 'carta')">📜 Carta</button>
+            <button class="tab-btn" onclick="switchTab(this, 'cafete')">☕ Café & Té</button>
+            <button class="tab-btn" onclick="switchTab(this, 'japon')">⛩️ Japón</button>
+            <button class="tab-btn" onclick="switchTab(this, 'musica')">🎵 Música</button>
+            <button class="tab-btn" onclick="switchTab(this, 'monster')">⚡ Monster</button>
+            <button class="tab-btn" onclick="switchTab(this, 'autos')">🏎️ Datos</button>
+            <button class="tab-btn" onclick="switchTab(this, 'quiz')">🎮 Quiz</button>
+          <button class="tab-btn" onclick="switchTab(this, 'secreto')">❓ ???</button>
+
+        </nav>
+
+        <!-- CONTENIDO DE PESTAÑAS -->
+        <main class="content-area">
+
+            <!-- 1. INICIO -->
+            <section id="inicio" class="tab-content active">
+                <div class="card pixel-box">
+                    <h2 class="card-title">¡Bienvenida Mi Niña! 🎉🌸</h2>
+                    <p class="mc-text">Hoy es tu día especial y espero que te guste este pequeño detallito hecho con amor y cariño y espero que te la pases bien hoy en tu dia .</p>
+                </div>
+            </section>
+
+            <!-- 2. NOSOTROS (CON SUS 20 FOTOS) -->
+            <section id="nosotros" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Nosotros 👥💕</h2>
+                    <div class="sub-card pixel-subcard" style="margin-bottom: 20px;">
+                        <p class="mc-text"><strong>Nuestra Historia:</strong> Si no hubiera sido esa publicacion mia en aquel grupo, no estaria deseandole feliz cumpleaños a la que hoy es mi MEJOR AMIGA. 
+                        Este espacio es de los personajes que me hacen recordar a nosotros y para recordar nuestros momentos</p>
+                    </div>
+
+                    <h3 class="auto-subtitle">Chi o Ño?</h3>
+<div class="photo-grid-20">
+  
+    <div class="photo-card-item pixel-subcard"><img src="Daft Punk.jpeg" alt="Foto 1" class="gallery-img"><p class="photo-desc">1. Daft Punk</p><p class="photo-subdesc">Somos dos piezas diferentes (No tan diferentes) que juntas crean algo único.</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="CupHead.jpeg" alt="Foto 2" class="gallery-img"><p class="photo-desc">2. CupHead y Mugman</p><p class="photo-subdesc">Si nos metemos en problemas los dos, terminariamos enfrentándolos como equipo.</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Alex y Steve.jpeg" alt="Foto 3" class="gallery-img"><p class="photo-desc">3. Alex y Steve</p><p class="photo-subdesc">Dos aventureros que pueden construir, explorar y sobrevivir juntos a cualquier cosa.</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Misa y Light.jpeg" alt="Foto 4" class="gallery-img"><p class="photo-desc">4. Misa y Light </p><p class="photo-subdesc">Una relación marcada por la admiración, la obsesión y objetivos muy distintos.</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Doomguy y canelita.jpeg" alt="Foto 5" class="gallery-img"><p class="photo-desc">5. Doomguy y Canelita</p><p class="photo-subdesc">Yo destruyo el infierno y tu probablemente intentarias calmarme</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Hachiware y Usagi.jpeg" alt="Foto 6" class="gallery-img"><p class="photo-desc">6. Hachiware y Usagi</p><p class="photo-subdesc">Dos personajes adorables que convierten cualquier aventura en un pequeño caos</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Dipper y Mabel.jpeg" alt="Foto 7" class="gallery-img"><p class="photo-desc">7. Dipper y Mabel</p><p class="photo-subdesc">Son diferentes en casi todo, pero siempre dispuestos a apoyarse en cualquier aventura.</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Fuego y Agua.jpeg" alt="Foto 8" class="gallery-img"><p class="photo-desc">8. Fuego y agua</p><p class="photo-subdesc">Tu eres fuego y yo gasolina, carbón, leña, alcohol jsjsj <3</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Hanzo y Kuailiang.jpeg" alt="Foto 9" class="gallery-img"><p class="photo-desc">9. Hanzo y Kuai Liang</p><p class="photo-subdesc">Dos guerreros con historias complicadas que terminan encontrando respeto y un propósito en común</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Jefe y Arma.jpeg" alt="Foto 10" class="gallery-img"><p class="photo-desc">10. Jhon y Arma (Cortana)</p><p class="photo-subdesc">Una conexión basada en confianza, compañerismo y saber que siempre puedes contar con el otro</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Joel y Ellie.jpeg" alt="Foto 11" class="gallery-img"><p class="photo-desc">11. Joel y Ellie</p><p class="photo-subdesc">Dos personas diferentes que terminan formando un vínculo fuerte mientras enfrentan el mundo juntos</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Mesa y Horno.jpeg" alt="Foto 12" class="gallery-img"><p class="photo-desc">12. Mesa de Crafteo y Horno</p><p class="photo-subdesc">Uno construye y el otro cocina; juntos hacen posible prácticamente cualquier cosa.(Yo contruyo y tu cocinas)</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Shinji y Kaworu.jpeg" alt="Foto 13" class="gallery-img"><p class="photo-desc">13. Shinji y Kaworu</p><p class="photo-subdesc">Una conexión inesperada entre dos personas que logran comprenderse de una manera especial</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Sonic y Tails.jpeg" alt="Foto 14" class="gallery-img"><p class="photo-desc">14. Sonic y Tails</p><p class="photo-subdesc">Uno corre hacia la aventura y el otro siempre está ahí para acompañarlo</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Teto y Miku.jpeg" alt="Foto 15" class="gallery-img"><p class="photo-desc">15. Teto y Miku</p><p class="photo-subdesc">Dos personalidades diferentes que juntas forman una combinación bastante icónica (Oee no me MUERDAS D:)</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Zombie y Esqueleto.jpeg" alt="Foto 16" class="gallery-img"><p class="photo-desc">16. Zombie y Esqueleto</p><p class="photo-subdesc">Dos compañeros que, aunque suelen meterse en problemas, siempre terminan compartiendo aventuras y haciendo equipo</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Lanzaguisantes y Girasol.jpeg" alt="Foto 17" class="gallery-img"><p class="photo-desc">17. Lanzaguisantes y Girasol</p><p class="photo-subdesc">Uno protege y el otro ayuda a mantener al equipo en pie (Yo te protejo) </p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Mini pekka.jpeg" alt="Foto 18" class="gallery-img"><p class="photo-desc">18. Mini Pekka y sus Pancakes</p><p class="photo-subdesc">TE AMO TANTO COMO EL MINI PEKKA AMA A SUS PANCAKES :3 </p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Hornet y El Caballerito.jpeg" alt="Foto 19" class="gallery-img"><p class="photo-desc">19. Hornet y El Caballerito</p><p class="photo-subdesc">Dos viajeros de caminos distintos que terminan ayudándose y entendiendo que juntos pueden llegar más lejos</p></div>
+    <div class="photo-card-item pixel-subcard"><img src="Tu y Yo.jpeg" alt="Foto 20" class="gallery-img"><p class="photo-desc">20. Tu y yo</p><p class="photo-subdesc">La IA no hizo bien su trabajo, pero es un ejemplo de como algún día nos conoceremos en persona, compartiendo momentos, tomandonos fotos juntos, viajando a muchos lugares, descubriendo muchas culturas y sobre todo, festejaremos tu cumpleaños juntos, de verdad mi niña, gracias por todo y nuevamente, FELIZ CUMPLEAÑOS :D  </p></div>
+</div>
+            </section>
+
+            <!-- 3. CARTA -->
+            <section id="carta" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Para ti, Bibi ✨</h2>
+                    <p class="mc-text">Feliz Cumpleaños Mi Niña, espero que te la estes pasando muy bien en tu dia.
+                    
+                    Me acuerdo cuando te conoci tu tenias 14 y yo 15, sinceramente crei que solamente hablariamos unos dias o semanas, pero no, ahora estoy aqui, felicitandote porque estas cumpliendo tus 17 añitos, ¿encerio? ¿17?, de verdad como pasa el tiempo, me hubiera gustado conocerte antes, pero aveces el destino y la vida hacen que lleguen personas en los momentos mas inesperados, asi como fue contigo, llegaste a mi vida cuando mi mundo se venia para abajo, sin duda eres un regalo del cielo...
+                    
+                    Y nuevamente dejame decirte, FELIZ CUMPLEAÑOS MI NIÑA, que cumplas tus sueños y metas, aunque la vida se vuelve dificil o complicada, yo estare aqui contigo, felicitandote por cada logro que consigas, no impota si es uno pequeño o grande, yo estare ahi apoyandote, estare ahi cuando sientas que no puedas con algo, estare ahi escuchandote, estare ahi cuidandote, estare ahi cuando necesites desaogarte, estare shi para ti SIEMPRE. </p>
+                    <p class="mc-text" style="margin-top: 10px;">FELICIDADES A LA PERSONA QUE MAS QUIERO EN ESTE MUNDO</p>
+                    <div class="sign">QUE TE LO PASES MUY BIEN, MI NIÑA, MI LESBIANA, MI CHIAPANECA, MI AMOR, LA QUE NO SE BAÑA, MI VIDA, Y NO OLVIDES QUE TE QUIEROOOO MUCHOOOOO 🎉</div>
+                </div>
+            </section>
+
+            <!-- 4. CAFÉ & TÉ -->
+            <section id="cafete" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Rincón de Café & Té ☕🍃</h2>
+                    <p class="mc-text">Las mejores bebidas para recargar energía y acompañar buenos momentos:</p>
+                    
+                    <div class="grid-3-col">
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=500&q=80" alt="Matcha" class="cover-img">
+                            <h3>Matcha Latte</h3>
+                            <p class="photo-desc">Té verde ceremonial japonés con leche cremosa.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80" alt="Espresso" class="cover-img">
+                            <h3>Espresso / Caramel</h3>
+                            <p class="photo-desc">Sabor Intenso con notas dulces y energéticas.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=500&q=80" alt="Chai" class="cover-img">
+                            <h3>Chai Latte</h3>
+                            <p class="photo-desc">Especias reconfortantes: canela, cardamomo y clavo.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=500&q=80" alt="Boba Tea" class="cover-img">
+                            <h3>Boba / Bubble Tea</h3>
+                            <p class="photo-desc">Té de perlas de tapioca de tus sabores favoritos.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80" alt="Cold Brew" class="cover-img">
+                            <h3>Cold Brew</h3>
+                            <p class="photo-desc">Café extraído en frío, suave, fresco y potente.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=500&q=80" alt="Té de Jazmín" class="cover-img">
+                            <h3>Té de Jazmín</h3>
+                            <p class="photo-desc">Aroma floral relajante y auténtico gusto oriental.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PESTAÑA JAPÓN CON IMÁGENES INTEGRADAS -->
+<section id="japon" class="tab-content">
+    <div class="card pixel-box">
+        <h2 class="card-title">Cultura & Estética ⛩️</h2>
+        <p class="mc-text" style="margin-bottom: 15px;">Datos y elementos especiales sobre Japón:</p>
+
+        <div class="grid-3-col">
+            <!-- 1. SIMBOLISMO DEL NEGRO -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%23121212'/><circle cx='100' cy='100' r='50' fill='%23000' stroke='%23ff80ab' stroke-width='4'/><text x='100' y='108' font-size='40' text-anchor='middle'>🖤</text></svg>" alt="Simbolismo del Negro" class="cover-img">
+                <h3>🖤 El Simbolismo del Negro</h3>
+                <p class="photo-desc">Elegancia, misterio y protección espiritual en la tradición japonesa (Kuro).</p>
+            </div>
+
+            <!-- 2. GASTRONOMÍA FAVORITA -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%232a1810'/><circle cx='100' cy='100' r='60' fill='%23e65100'/><text x='100' y='110' font-size='50' text-anchor='middle'>🍜</text></svg>" alt="Gastronomía" class="cover-img">
+                <h3>🍜 Gastronomía Favorita</h3>
+                <p class="photo-desc">Ramen artesanal, Spaghetti Wafu y Okonomiyaki.</p>
+            </div>
+
+            <!-- 3. SAKURA & LOTO -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%232d121e'/><circle cx='100' cy='100' r='60' fill='%23f8bbd0'/><text x='100' y='110' font-size='50' text-anchor='middle'>🌸</text></svg>" alt="Sakura" class="cover-img">
+                <h3>🌸 Sakura & Loto</h3>
+                <p class="photo-desc">Símbolos de renacimiento y pureza que florecen con belleza única.</p>
+            </div>
+
+            <!-- 4. TECNOLOGÍA & TRADICIÓN -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%230a192f'/><circle cx='100' cy='100' r='60' fill='%2300bcd4'/><text x='100' y='110' font-size='50' text-anchor='middle'>🤖</text></svg>" alt="Tecnología" class="cover-img">
+                <h3>🤖 Tecnología & Tradición</h3>
+                <p class="photo-desc">Rascacielos llenos de luces neón en armonía con santuarios milenarios.</p>
+            </div>
+
+            <!-- 5. MOMIJIGARI -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%233e1404'/><circle cx='100' cy='100' r='60' fill='%23d84315'/><text x='100' y='110' font-size='50' text-anchor='middle'>🍁</text></svg>" alt="Momijigari" class="cover-img">
+                <h3>🍁 Momijigari</h3>
+                <p class="photo-desc">La tradición otoñal de contemplar el cambio de color de las hojas de arce.</p>
+            </div>
+
+            <!-- 6. WABI-SABI -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%231b261e'/><circle cx='100' cy='100' r='60' fill='%2381c784'/><text x='100' y='110' font-size='50' text-anchor='middle'>🏮</text></svg>" alt="Wabi-Sabi" class="cover-img">
+                <h3>🏮 Estética Wabi-Sabi</h3>
+                <p class="photo-desc">La filosofía de encontrar belleza en la imperfección y la sencillez.</p>
+            </div>
+
+            <!-- 7. CEREMONIA DEL TÉ -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%231a2a1a'/><circle cx='100' cy='100' r='60' fill='%234caf50'/><text x='100' y='110' font-size='50' text-anchor='middle'>🍵</text></svg>" alt="Ceremonia del Té" class="cover-img">
+                <h3>🍵 Ceremonia del Té</h3>
+                <p class="photo-desc">Ritual de serenidad enfocado en preparar y servir matcha con tranquilidad.</p>
+            </div>
+
+            <!-- 8. CALLES YOKOCHŌ -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%232c0b0e'/><circle cx='100' cy='100' r='60' fill='%23e53935'/><text x='100' y='110' font-size='50' text-anchor='middle'>🏮</text></svg>" alt="Calles Yokocho" class="cover-img">
+                <h3>🏮 Calles Yokochō</h3>
+                <p class="photo-desc">Callejones iluminados por faroles rojos con locales llenos de nostalgia.</p>
+            </div>
+
+            <!-- 9. MONTE FUJI -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%230f2027'/><circle cx='100' cy='100' r='60' fill='%2300bcd4'/><text x='100' y='110' font-size='50' text-anchor='middle'>🗻</text></svg>" alt="Monte Fuji" class="cover-img">
+                <h3>🗻 Monte Fuji</h3>
+                <p class="photo-desc">Símbolo sagrado y cumbre más alta de Japón con una simetría impresionante.</p>
+            </div>
+
+            <!-- 10. IKIGAI -->
+            <div class="media-card pixel-subcard">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%2328132b'/><circle cx='100' cy='100' r='60' fill='%23ba68c8'/><text x='100' y='110' font-size='50' text-anchor='middle'>🎏</text></svg>" alt="Ikigai" class="cover-img">
+                <h3>🎏 Concepto de Ikigai</h3>
+                <p class="photo-desc">La búsqueda de tu propósito diario que le da alegría y sentido a la vida.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <!-- 6. MÚSICA (15 CANCIONES + BOTÓN SPOTIFY CONSERVADO) -->
+            <section id="musica" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Playlist Essentials 🎧</h2>
+                    <p class="mc-text">Veamos un rato el significado de algunas canciones:</p>
+                    
+                    <div class="grid-3-col">
+                        <div class="media-card pixel-subcard">
+                            <img src="Nuts.jpeg" alt="Canción 1" class="cover-img">
+                            <h3>1. Lil Peep</h3>
+                            <p class="photo-desc">Nuts - Es una expresión cruda y directa de deseos juveniles y la búsqueda de escapismo. La letra refleja un anhelo por salir de la rutina y vivir experiencias intensas, como se evidencia en las líneas que hablan de querer 'salir' y 'sentirlo ahora'. La repetición de estas frases sugiere una urgencia y una necesidad inmediata de satisfacer sus deseos.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Mesmerizer.jpeg" alt="Canción 2" class="cover-img">
+                            <h3>2. Hatsune Miku y Kasane Teto</h3>
+                            <p class="photo-desc">MESMERIZER (メズマライザー) - A primera vista, la canción tiene un ritmo electro-pop sumamente pegajoso y alegre. Sin embargo, su trasfondo aborda la evasión de la realidad, la hipnosis mediática y la presión de mantener una fachada de felicidad ante el público.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Post Punk.jpeg" alt="Canción 3" class="cover-img">
+                            <h3>3. Molchat Doma</h3>
+                            <p class="photo-desc"> Судно - La letra de la canción no fue escrita por la banda; es una adaptación de un poema del poeta ruso Boris Ryzhy publicado en 1997. El texto reflexiona sobre la monotonía, la enfermedad y la melancolía dentro de la vida cotidiana en la era possoviética.
+</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="loversrock.jpg" alt="Canción 4" class="cover-img">
+                            <h3>4. TV Girl</h3>
+                            <p class="photo-desc">Lovers Rock - El sample principal: La canción está construida sobre un fragmento en bucle de la introducción del clásico de soul de 1960 "The Dance Is Over" de The Shirelles. TV Girl ralentizó e invirtió partes del sonido original para crear una atmósfera hipnótica y retro.
+​Significado y temática: La letra explora la fugacidad del romance juvenil, la intimidad física desapegada y la nostalgia por conexiones que no llegaron a convertirse en algo duradero. Combina una melodía envolvente y romántica con una lírica cínica y melancólica.
+</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Amour Plastique.jpeg" alt="Canción 5" class="cover-img">
+                            <h3>5. Videoclub</h3>
+                            <p class="photo-desc">Amour Plastique - Explora la inocencia, el deseo y la melancolía del primer amor adolescente. La frase "amor plástico" evoca una mezcla de fragilidad y fascinación por una conexión apasionada que parece casi irreal o de ensueño y producida por el dúo francés conformado entonces por Adèle Castillon y Matthieu Reynaud, la canción combina sintetizadores retro nostálgicos de los años 80 con una melodía suave e hipnótica que captura la frescura de la juventud.
+</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Mi Niña.jpeg" alt="Canción 6" class="cover-img">
+                            <h3>6. José José </h3>
+                            <p class="photo-desc">Mi Niña - Aborda la transición de ver crecer a una hija (o a un amor joven e inocente) que pasa de la niñez a la madurez. Explora la mezcla de ternura, protección, orgullo y la inevitable melancolía que siente un padre o figura protectora al ver cómo la persona amada toma su propio camino en la vida e interpretada por la impecable técnica vocal de José José en la cúspide de su carrerra, pasando de versos suaves y conversacionales a un estribillo lleno de potencia y emotividad.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Mon Laferte.jpeg" alt="Canción 7" class="cover-img">
+                            <h3>7. Mon Laferte </h3>
+                            <p class="photo-desc"> My One And Only Love - Es un canto a la aceptación, el perdón y la sanación en el amor. Explora la madurez emocional de reconocer las cicatrices y matices en una relación, manteniendo la esperanza de que el afecto sincero y la comprensión mutua superarán el dolor. </p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Te amo.jpeg" alt="Canción 8" class="cover-img">
+                            <h3>8. Los Mier </h3>
+                            <p class="photo-desc">Te Amo - Es una apasionada declaración de amor que aborda la vulnerabilidad y la dependencia emocional dentro de una relación. Expresa el temor a la soledad, el deseo constante de estar cerca de la pareja y la incapacidad de concebir la vida sin la presencia del ser amado.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Spit in my face.jpeg" alt="Canción 9" class="cover-img">
+                            <h3>9. ThxSoMch </h3>
+                            <p class="photo-desc">SPIT IN MY FACE! - La metáfora central ("escupirme en la cara") representa la disposición a tolerar la degradación, la humillación y el maltrato constante con tal de no perder la conexión con la otra persona.
+
+Al repetir "it won't phase me" ("no me afectará"), el protagonista intenta construir una armadura emocional defensiva. Intenta convencerse a sí mismo de que es inmune al dolor, aunque inmediatamente después admite "I've gone crazy" ("me he vuelto loco"), revelando el colapso mental provocado por la relación.
+</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="José José.jpeg" alt="Canción 10" class="cover-img">
+                            <h3>10. José José </h3>
+                            <p class="photo-desc">Te Quiero Tal y Como Eres (Just the Way You Are) - Es un himno a la aceptación incondicional en la pareja. La letra transmite un mensaje claro: no es necesario cambiar la personalidad, la vestimenta o la forma de ser para agradar o mantener el amor de alguien. Celebra la belleza de amar a una persona exactamente como es, con sus virtudes y naturalidad.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Un Coco.jpeg" alt="Canción 11" class="cover-img">
+                            <h3>11. Bad Bunny </h3>
+                            <p class="photo-desc">Un Coco - La canción utiliza la metáfora de estar en la playa intentando disfrutar de las vacaciones, pero siendo incapaz de desconectar de los recuerdos. La frase central "a ver si un coco me cae en la cabeza y me borra la memoria" refleja de forma irónica y melancólica el deseo extremo de amnesia selectiva para dejar de sufrir por alguien.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Discovery.jpeg" alt="Canción 12" class="cover-img">
+                            <h3>12. Daft Punk </h3>
+                            <p class="photo-desc">Something About Us - Explora la honestidad cruda de un amor no correspondido o imposible. La letra aborda la aceptación de que, aunque la conexión entre dos personas es genuina y profunda, el momento o las circunstancias no son los correctos para que estén juntos</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Mistery Girl.jpeg" alt="Canción 13" class="cover-img">
+                            <h3>13. Housecall </h3>
+                            <p class="photo-desc">Mistery Girl - La letra describe la fascinación por una chica misteriosa y excéntrica ("She's so weird, but I dig it"). Explora el contraste entre la atracción desesperada del protagonista y la actitud fría e indiferente de ella ("You're so cold, you never listen, always ignoring me, leaving me blue."), reflejando la inseguridad de intentar gustarle a alguien que parece estar siempre fuera de alcance. </p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Depresión Sonora.jpeg" alt="Canción 14" class="cover-img">
+                            <h3>14. Depresión Sonora </h3>
+                            <p class="photo-desc">Generación Perdida, Diversión Prohibida - Explora la apatía, el desencanto generacional y la angustia existencial de la juventud contemporánea. La canción retrata la sensación de aislamiento y la falta de un futuro prometedor, abordando la soledad del confinamiento en la habitación y el refugio en vicios cotidianos frente a una realidad que se siente represiva o vacía.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Harvey.jpeg" alt="Canción 15" class="cover-img">
+                            <h3>15. Her's </h3>
+                            <p class="photo-desc">Harvey - Es un tributo a la amistad incondicional, la inocencia y el refugio en la imaginación frente a la soledad. La letra explora el cariño profundo hacia una presencia reconfortante que otros no pueden ver o entender, celebrando el consuelo que brinda tener a alguien (real o imaginario) que apoya incondicionalmente.</p>
+                        </div>
+                    </div>
+
+                    <div class="playlist-banner pixel-subcard">
+                        <h3>💚 Nuestra Playlist</h3>
+                        <p class="mc-text" style="margin-bottom: 10px;">Escucha la lista completa en Spotify:</p>
+                        <a href="https://open.spotify.com/playlist/1zUop0p3fRPxDbqMvLtw2v?si=-xJVzh32TESokG-L3mWNcA&utm_source=copy-link&pt=943876b7fdc71c9d2b76f5be025832c9&pi=ho4h3u96T4m1I" target="_blank" class="spotify-btn mc-btn">
+                            Abrir en Spotify 🎵
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. MONSTER ENERGY -->
+            <section id="monster" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Universo Monster Energy ⚡</h2>
+
+                    <div class="grid-3-col">
+                        <div class="media-card pixel-subcard">
+                            <img src="Monster Clásica.jpg" alt="Monster Classic" class="cover-img">
+                            <h3>Clásica Original</h3>
+                            <p class="photo-desc">La lata negra con la garra verde icónica de 2002.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Monster Ultra Rosa.jpg" alt="Monster Ultra Rosa" class="cover-img">
+                            <h3>Ultra Rosa / Fiesta</h3>
+                            <p class="photo-desc">Lata de textura mate con grabados estéticos únicos.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Monster Pipeline Punch.jpg" alt="Pipeline Punch" class="cover-img">
+                            <h3>Pipeline Punch</h3>
+                            <p class="photo-desc">Sabor frutal tropical directo desde Hawái.</p>
+                        </div>
+                        <div class="media-card pixel-subcard">
+                            <img src="Monster M3 Japon.jpg" alt="Monster M3 Japan" class="cover-img">
+                            <h3>Edición M3 Japón</h3>
+                            <p class="photo-desc">Botella de aluminio concentrada importada de Japón.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+                        <!-- 8. MITSUBISHI 3000GT VR-4 -->
+            <section id="autos" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Datos Interesantes 🏎️</h2>
+                    <h3 class="auto-subtitle">Letra "M": Mitsubishi 3000GT VR-4</h3>
+
+                    <div class="hero-image-box">
+                        <img src="Mitsubishi 3000GT Vr - 4.jpg" alt="Mitsubishi 3000GT VR-4" class="card-img">
+                    </div>
+
+                    <div class="sub-card pixel-subcard" style="margin-bottom: 12px;">
+                        <h3>🏎️ Historia de una Leyenda JDM</h3>
+                        <p class="mc-text">
+                            Lanzado en los años 90 (conocido en Japón como <em>GTO</em>), el <strong>Mitsubishi 3000GT VR-4</strong> fue la obra maestra de ingeniería japonesa diseñada para competir contra el Nissan GT-R y el Toyota Supra. Era una nave espacial sobre ruedas adelantada a su época.
+                        </p>
+                    </div>
+
+                    <div class="sub-card pixel-subcard" style="margin-bottom: 12px;">
+                        <h3>⚡ Tecnología Revolucionaria</h3>
+                        <p class="mc-text">
+                            • <strong>Motor:</strong> V6 Twin-Turbo de 3.0L con 320 HP.<br>
+                            • <strong>Active Aero:</strong> Alerón y spoiler delantero ajustables automáticamente según la velocidad.<br>
+                            • <strong>AWS (All-Wheel Steering):</strong> Dirección en las cuatro ruedas para mayor control en curvas.<br>
+                            • <strong>Tracción Integral (4WD):</strong> Agarre total en cualquier terreno.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- 9. QUIZ -->
+            <section id="quiz" class="tab-content">
+                <div class="card pixel-box">
+                    <h2 class="card-title">Mini Quiz de Japón 🎌</h2>
+                    <p class="mc-text" style="margin-bottom: 15px;">Responde las 6 preguntas:</p>
+
+                    <div id="quiz-container">
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>1. ¿Cuál es la montaña más alta de Japón?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">A) Monte Takao</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">B) Monte Fuji</button>
+                        </div>
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>2. ¿Qué flor florece hermosa desde la oscuridad del agua?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">A) Flor de Loto</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">B) Girasol</button>
+                        </div>
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>3. ¿Qué significa la palabra "Kawaii"?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">A) Lindo / Tierno</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">B) Fuerte</button>
+                        </div>
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>4. ¿Cuál es el tren de alta velocidad japonés?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">A) Yamashiro</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">B) Shinkansen</button>
+                        </div>
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>5. ¿Barrio famoso por el anime y tecnología?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">A) Akihabara</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">B) Roppongi</button>
+                        </div>
+                        <div class="quiz-q pixel-subcard">
+                            <p class="mc-text"><strong>6. ¿Cómo se llaman los árboles de cerezo japoneses?</strong></p>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, true)">A) Sakura</button>
+                            <button class="quiz-opt mc-btn" onclick="responder(this, false)">B) Tsubaki</button>
+                        </div>
+                    </div>
+
+                    <div id="quiz-result" class="quiz-result-box pixel-box" style="display: none;">
+                        <h3 id="result-title">¡Quiz Completado! 🎉</h3>
+                        <p id="score-text" class="mc-text"></p>
+                    </div>
+                </div>
+            </section>
+          
+<!-- SECCIÓN SECRETA -->
+<section id="secreto" class="tab-content">
+    <div class="card pixel-box" style="text-align: center;">
+        <h2 class="card-title">Sorpresa Especial 🎁</h2>
+        
+        <!-- ESTADO 1: REGALO CERRADO -->
+        <div id="gift-box" onclick="abrirRegalo()" style="cursor: pointer; margin: 20px 0;">
+            <div class="pixel-gift">🎁</div>
+            <p class="mc-text" style="margin-top: 10px; color: #ff80ab;">Tócame</p>
+        </div>
+
+        <!-- ESTADO 2: TARJETA BLANCA GOOGLE PLAY -->
+        <div id="card-container" class="card-flip-container" style="display: none;" onclick="voltearTarjeta()">
+            <div id="card-inner" class="card-inner">
+                
+                <!-- FRENTE DE LA TARJETA (BLANCA CON LOGO 8-BITS) -->
+                <div class="card-front pixel-card-white">
+                    <div class="pixel-gp-logo">
+                        <svg viewBox="0 0 10 10" class="pixel-svg">
+                            <!-- Azul (Triángulo izquierdo) -->
+                            <polygon points="1,1 5,5 1,9" fill="#4285F4"/>
+                            <!-- Verde (Arriba) -->
+                            <polygon points="1,1 9,5 5,5" fill="#0F9D58"/>
+                            <!-- Amarillo (Derecha) -->
+                            <polygon points="9,5 5,5 7,7" fill="#FFBB00"/>
+                            <!-- Rojo (Abajo) -->
+                            <polygon points="1,9 5,5 9,5" fill="#EA4335"/>
+                        </svg>
+                    </div>
+                    <p class="gp-text">Google Play</p>
+                    <p class="gp-subtext">GIFT CARD</p>
+                    <p class="photo-desc" style="color: #666; margin-top: 8px;">Toca para voltear 🔄</p>
+                </div>
+
+                <!-- REVERSO DE LA TARJETA -->
+                <div class="card-back pixel-card-white">
+                    <p class="gp-text" style="font-size: 0.6rem;">CÓDIGO DE CANJE:</p>
+                    <!-- REEMPLAZA ESTE CÓDIGO POR EL TUYO -->
+                    <div class="code-box">2RFB-3C2X-WCOD-BT8U</div>
+                    <p class="photo-desc" style="color: #555; margin-top: 12px;">¡NO ES MUCHO PERO QUE LO DISFRUTES MI NIÑA! 💖</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+      function abrirRegalo() {
+    document.getElementById('gift-box').style.display = 'none';
+    document.getElementById('card-container').style.display = 'block';
+}
+
+function voltearTarjeta() {
+    document.getElementById('card-inner').classList.toggle('flipped');
+}
+        function iniciarExperiencia() {
+            document.getElementById('welcome-screen').classList.remove('active-screen');
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.classList.add('active-screen');
+
+            setTimeout(() => {
+                loadingScreen.classList.remove('active-screen');
+                document.getElementById('main-content').classList.add('active-screen');
+            }, 2200);
+        }
+
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        let respuestasCorrectas = 0;
+        let preguntasRespondidas = 0;
+
+        function responder(btn, esCorrecta) {
+            const parent = btn.parentElement;
+            const botones = parent.querySelectorAll('.quiz-opt');
+            
+            botones.forEach(b => b.disabled = true);
+
+            if (esCorrecta) {
+                btn.classList.add('correct');
+                respuestasCorrectas++;
+            } else {
+                btn.classList.add('incorrect');
+            }
+
+            preguntasRespondidas++;
+
+            if (preguntasRespondidas === 6) {
+                setTimeout(() => {
+                    const resultBox = document.getElementById('quiz-result');
+                    const scoreText = document.getElementById('score-text');
+                    const resultTitle = document.getElementById('result-title');
+                    
+                    resultBox.style.display = 'block';
+
+                    if (respuestasCorrectas < 4) {
+                        resultTitle.innerText = "¡Casi lo logras Bibi! 🌸";
+                        scoreText.innerText = `Obtuviste ${respuestasCorrectas} de 6 correctas. ✨`;
+                    } else {
+                        resultTitle.innerText = "¡Excelente Resultado! 🎉";
+                        scoreText.innerText = `Obtuviste ${respuestasCorrectas} de 6 correctas. ¡Eres toda una experta! ✨`;
+                    }
+                }, 400);
+            }
+        }
+    </script>
+</body>
+</html>

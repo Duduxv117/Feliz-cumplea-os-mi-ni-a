@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', monospace, sans-serif !important;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* FONDO TV GIRL (ROSA Y AZUL PASTEL OSCURO) */
+body {
+    background: linear-gradient(135deg, #2b1e3a 0%, #4a3b5c 30%, #7b4266 65%, #2a4365 100%);
+    background-attachment: fixed;
+    color: #ffffff !important;
+}
+
+/* PANTALLAS */
+.screen {
+    display: none !important;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.screen.active-screen {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CAJAS ESTILO INTERFAZ MINECRAFT */
+.pixel-box {
+    background-color: rgba(33, 20, 28, 0.94) !important;
+    border: 4px solid #000000;
+    outline: 4px solid #d47a96;
+    box-shadow: inset -4px -4px 0px #11080d, inset 4px 4px 0px #f3a4be, 0 8px 20px rgba(0,0,0,0.6);
+    padding: 20px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.pixel-subcard {
+    background-color: rgba(24, 12, 19, 0.92) !important;
+    border: 3px solid #000000;
+    box-shadow: inset -3px -3px 0px #0d0408, inset 3px 3px 0px #633246;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+/* TEXTOS */
+.mc-text, p, span, li {
+    font-size: 0.65rem;
+    line-height: 1.6;
+    color: #fce4ec;
+}
+
+.mc-badge {
+    color: #ffb74d;
+    font-size: 0.6rem;
+    margin-bottom: 15px;
+}
+
+.welcome-title, .mc-title {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    color: #ffeb3b;
+    line-height: 1.5;
+    text-shadow: 2px 2px 0px #5d4037;
+}
+
+.welcome-sub, .header-subtitle {
+    color: #f8bbd0;
+    font-size: 0.65rem;
+    margin-bottom: 25px;
+}
+
+/* BOTONES */
+.mc-btn {
+    background: #880e4f;
+    color: #ffffff;
+    border: 3px solid #000000;
+    box-shadow: inset -3px -3px 0px #4a0000, inset 3px 3px 0px #bc477b;
+    padding: 12px 16px;
+    font-size: 0.65rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.mc-btn:hover {
+    background: #ff4081;
+    color: #ffffff;
+    box-shadow: inset -3px -3px 0px #c2185b, inset 3px 3px 0px #ff80ab;
+}
+
+/* SPINNER */
+.pixel-spinner {
+    width: 32px;
+    height: 32px;
+    background-color: #ff80ab;
+    border: 3px solid #000000;
+    margin: 0 auto 20px auto;
+    animation: mc-spin 0.8s infinite steps(4);
+}
+
+@keyframes mc-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text { color: #ff80ab; font-size: 0.7rem; margin-bottom: 8px; }
+.sub-loading { color: #f8bbd0; font-size: 0.55rem; }
+
+/* CONTENIDO PRINCIPAL */
+#main-content { justify-content: flex-start; padding: 20px 10px; max-width: 750px; margin: 0 auto; }
+.app-header { text-align: center; margin-bottom: 20px; }
+
+/* NAVEGACIÓN */
+.tab-bar { display: flex; gap: 6px; width: 100%; margin-bottom: 15px; overflow-x: auto; padding-bottom: 10px; }
+.tab-btn { background: #4a2838; border: 2px solid #000000; box-shadow: inset -2px -2px 0px #221018, inset 2px 2px 0px #7a465f; color: #ffffff; padding: 8px 10px; font-size: 0.55rem; cursor: pointer; white-space: nowrap; }
+.tab-btn.active { background: #ff4081; color: #ffffff; box-shadow: inset -2px -2px 0px #c2185b, inset 2px 2px 0px #ff80ab; }
+
+.content-area { width: 100%; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.card-title { color: #ffeb3b; font-size: 0.85rem; margin-bottom: 12px; line-height: 1.4; }
+.auto-subtitle, .sub-card h3 { color: #ff80ab; font-size: 0.65rem; margin-bottom: 10px; line-height: 1.4; }
+
+.card-img, .gallery-img, .cover-img { border: 3px solid #000000; outline: 2px solid #ff80ab; }
+.card-img { width: 100%; height: 180px; object-fit: cover; }
+
+.grid-3-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 15px; }
+.photo-grid-20 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.photo-card-item, .media-card { padding: 8px; text-align: center; }
+.photo-desc { font-size: 0.55rem; color: #f8bbd0; margin-top: 6px; }
+.gallery-img, .cover-img { width: 100%; height: 110px; object-fit: cover; }
+
+.playlist-banner { margin-top: 20px; text-align: center; }
+.playlist-banner h3 { color: #ff80ab; font-size: 0.7rem; margin-bottom: 8px; }
+.sign { margin-top: 20px; color: #ff80ab; font-size: 0.65rem; }
+
+/* QUIZ */
+.quiz-q { margin-bottom: 12px; }
+.quiz-opt { width: 100%; margin-top: 8px; text-align: left; }
+.quiz-opt.correct { background: #2e7d32 !important; color: #ffffff !important; box-shadow: inset -3px -3px 0px #1b5e20, inset 3px 3px 0px #4caf50 !important; }
+.quiz-opt.incorrect { background: #c62828 !important; color: #ffffff !important; box-shadow: inset -3px -3px 0px #b71c1c, inset 3px 3px 0px #ef5350 !important; }
+.quiz-result-box { margin-top: 20px; text-align: center; }
+.quiz-result-box h3 { color: #ffeb3b; font-size: 0.75rem; margin-bottom: 8px; }
+
+/* REGALO Y TARJETA BLANCA 8-BITS */
+.pixel-gift {
+    font-size: 4rem;
+    animation: gift-bounce 1s infinite alternate ease-in-out;
+}
+
+@keyframes gift-bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+.card-flip-container {
+    perspective: 1000px;
+    width: 260px;
+    height: 160px;
+    margin: 20px auto;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #000;
+}
+
+/* TARJETA BLANCA */
+.pixel-card-white {
+    background: #ffffff !important;
+    box-shadow: inset -4px -4px 0px #dcdcdc, inset 4px 4px 0px #ffffff;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* LOGO PIXEL ART SVG */
+.pixel-gp-logo {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 5px;
+}
+
+.pixel-svg {
+    width: 100%;
+    height: 100%;
+    shape-rendering: crispedges; /* Mantiene la estética pixelada pura */
+}
+
+/* TEXTOS DE LA TARJETA BLANCA */
+.gp-text {
+    color: #202124 !important;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.gp-subtext {
+    color: #5f6368 !important;
+    font-size: 0.55rem;
+    margin-top: 2px;
+}
+
+.code-box {
+    background: #1e1e1e;
+    color: #ffeb3b;
+    padding: 8px 12px;
+    border: 2px dashed #ff4081;
+    font-size: 0.6rem;
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+
+/* FORZAR LATA COMPLETA Y ALEJADA */
+#monster .cover-img, 
+#monster .card-img, 
+#monster img {
+    height: 250px !important;
+    max-height: 250px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    padding: 12px !important;
+}
+
+/* ESTILO PARA LA DESCRIPCIÓN BLANCA DE LAS FOTOS */
+.photo-subdesc {
+    color: #ffffff !important; /* Forzar el color blanco puro */
+    font-size: 0.55rem;
+    margin-top: 5px;
+    line-height: 1.4;
+    text-align: center; /* Centrar el texto debajo del título */
+}
+/* AJUSTE ESPECÍFICO PARA LAS TARJETAS DE CAFÉ & TÉ */
+#cafete .grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important; /* Tarjetas más compactas */
+    gap: 15px !important;
+    justify-items: center; /* Centra las tarjetas en el grid */
+}
+
+#cafete .media-card {
+    max-width: 180px; /* Ancho máximo de cada tarjeta */
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#cafete .cover-img {
+    width: 100% !important;
+    height: 160px !important; /* Altura fija para la imagen de la bebida */
+    object-fit: contain !important; /* Muestra la foto completa y alejada sin recortar */
+    background-color: #1a0f14 !important; /* Fondo oscuro sutil */
+    padding: 8px !important; /* Espacio interno para que la bebida respire */
+    border: 3px solid #000000;
+    outline: 2px solid #ff80ab;
+}
+
+/* Ajuste sutil de textos en la tarjeta de café */
+#cafete .media-card h3 {
+    font-size: 0.65rem !important;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #ffeb3b; /* Amarillo para el título de la bebida */
+}
+
+#cafete .photo-desc {
+    font-size: 0.55rem !important;
+    line-height: 1.3;
+}
+/* AJUSTE ESPECÍFICO PARA LAS TARJETAS DEL APARTADO DE MÚSICA */
+#musica .grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 15px !important;
+    justify-items: center;
+}
+
+#musica .media-card {
+    max-width: 180px; /* Ancho cómodo para portadas de álbumes/artistas */
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#musica .cover-img,
+#musica .card-img,
+#musica img {
+    width: 100% !important;
+    height: 160px !important; /* Altura ideal estilo portada de disco */
+    object-fit: contain !important; /* Aleja la foto para mostrarla completa */
+    background-color: #120914 !important; /* Fondo oscuro estilo reproductor */
+    padding: 8px !important;
+    border: 3px solid #000000;
+    outline: 2px solid #ff80ab;
+}
+
+/* Ajustes de tipografía para música */
+#musica .media-card h3 {
+    font-size: 0.65rem !important;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #ff80ab; /* Título en tono rosa vibrante */
+}
+
+#musica .photo-desc {
+    font-size: 0.55rem !important;
+    line-height: 1.3;
+    color: #ffffff !important; /* Descripción clara y legible */
+}
+/* ESTILOS Y TAMAÑO DE TARJETAS CON FOTO PARA JAPÓN */
+#japon .grid-3-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 15px !important;
+    justify-items: center;
+}
+
+#japon .media-card {
+    max-width: 180px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#japon .cover-img,
+#japon .card-img,
+#japon img {
+    width: 100% !important;
+    height: 160px !important;
+    object-fit: contain !important; /* Muestra la foto entera y alejada */
+    background-color: #0f0914 !important;
+    padding: 8px !important;
+    border: 3px solid #000000;
+    outline: 2px solid #ff80ab;
+}
+
+#japon .media-card h3 {
+    font-size: 0.65rem !important;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #ff80ab !important; /* Título rosa */
+}
+
+#japon .photo-desc {
+    font-size: 0.55rem !important;
+    line-height: 1.3;
+    color: #ffffff !important; /* Descripción blanca */
+}
